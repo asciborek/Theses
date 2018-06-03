@@ -1,11 +1,11 @@
 CREATE TABLE degree (
   degree_id SMALLINT PRIMARY KEY,
-  degree    VARCHAR(20) UNIQUE NOT NULL
+  degree    VARCHAR(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE subject(
   subject_id SERIAL PRIMARY KEY,
-  subject VARCHAR(80) UNIQUE NOT NULL,
+  subject VARCHAR(120) UNIQUE NOT NULL,
   degree_id SMALLINT NOT NULL REFERENCES degree(degree_id)
 );
 
@@ -40,6 +40,8 @@ CREATE TABLE academic_employee(
   department_id SMALLINT NOT NULL REFERENCES department(department_id)
 );
 
+CREATE INDEX employee_name_index ON academic_employee (last_name);
+
 CREATE TABLE thesis(
   thesis_id SERIAL PRIMARY KEY,
   subject_id INTEGER NOT NULL REFERENCES subject(subject_id),
@@ -49,6 +51,7 @@ CREATE TABLE thesis(
   ending_grade DECIMAL (2,1)
 );
 
+CREATE INDEX defence_date_index ON thesis (defence_date);
 
 CREATE TABLE review(
   review_id SERIAL PRIMARY KEY,
@@ -66,6 +69,8 @@ CREATE TABLE student(
   index CHAR(10) UNIQUE NOT NULL,
   email VARCHAR(80) UNIQUE
 );
+
+CREATE  INDEX student_name_index ON student(last_name);
 
 CREATE TABLE thesis_student(
   thesis_id INTEGER NOT NULL REFERENCES thesis(thesis_id),
