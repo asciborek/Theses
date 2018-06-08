@@ -77,3 +77,10 @@ CREATE TABLE thesis_student(
   student_id INTEGER NOT NULL  REFERENCES student(student_id),
   UNIQUE (thesis_id, student_id)
 );
+
+
+CREATE VIEW employees_view AS
+SELECT e.first_name, e.last_name, e.email, degree.degree, department.name FROM academic_employee e
+  INNER JOIN degree ON e.degree_id = degree.degree_id
+  INNER JOIN department ON e.department_id = department.department_id
+  ORDER BY e.last_name;
